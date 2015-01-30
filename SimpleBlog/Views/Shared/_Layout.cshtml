@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - SimpleBlog</title>
+</head>
+<body>
+    <header>
+        <h1>Simple Blog</h1>
+        <a href="@Url.RouteUrl("home")">Home</a>
+        <a href="@Url.RouteUrl("login")">Login</a>
+    </header>
+    @RenderBody()
+    <footer>
+        &copy; @DateTime.UtcNow.Year - moldnix
+    </footer>
+    @RenderSection("Scripts", false)
+</body>
+</html>
