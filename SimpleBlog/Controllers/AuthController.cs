@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SimpleBlog.ViewModels;
+using System.Web.Security;
 
 namespace SimpleBlog.Controllers
 {
@@ -15,18 +16,24 @@ namespace SimpleBlog.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(AuthLogin form)
+        public ActionResult Login(AuthLogin form, string returnUrl)
         {
             if (!ModelState.IsValid)
                 return View(form);
 
-            if (form.Username != "moldnix")
-            {
-                ModelState.AddModelError("Username", "Incorect username or password!");
-                return View(form);
-            }
+            FormsAuthentication.SetAuthCookie(form.Username, true);
 
-            return Content("Hi");
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToRoute("home");
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToRoute("home");
         }
     }
 }
